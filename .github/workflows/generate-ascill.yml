@@ -2,7 +2,7 @@ name: Generate Ascill
 on: push
 
 jobs:
-    ascii_job:
+    ascii_job1:
        runs-on: ubuntu-latest
        steps:
             - name: Checkout repo
