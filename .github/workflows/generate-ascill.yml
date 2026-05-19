@@ -1,0 +1,23 @@
+name: Generate Ascill
+on: push
+
+jobs:
+    ascii_job:
+       runs-on: ubuntu-latest
+       steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+
+            - name: Install cowsay program
+              run: sudo apt -get install cowsay -y
+
+            - name: Execute cowsay
+              run: cowsay -f dragon "RUn for cover, Iam dragon">>dragon.txt
+
+            - name: Test file exist
+              run: grep -i "dragon" dragon.txt
+
+            - name: Read file
+              run: cat dragon.txt
+            - name: list repo files
+              run: ls -lrat
