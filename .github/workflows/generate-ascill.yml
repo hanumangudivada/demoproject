@@ -1,23 +1,25 @@
-name: Generate Ascill
+name: Generate Ascii
 on: push
 
 jobs:
-    ascii_job1:
-       runs-on: ubuntu-latest
-       steps:
-            - name: Checkout repo
-              uses: actions/checkout@v6
+  ascii_job1:
+    runs-on: ubuntu-latest
 
-            - name: Install cowsay program
-              run: sudo apt -get install cowsay -y
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
 
-            - name: Execute cowsay
-              run: cowsay -f dragon "RUn for cover, Iam dragon">>dragon.txt
+      - name: Install cowsay program
+        run: sudo apt-get install cowsay -y
 
-            - name: Test file exist
-              run: grep -i "dragon" dragon.txt
+      - name: Execute cowsay
+        run: cowsay -f dragon "Run for cover, I am dragon" >> dragon.txt
 
-            - name: Read file
-              run: cat dragon.txt
-            - name: list repo files
-              run: ls -lrat
+      - name: Test file exists
+        run: grep -i "dragon" dragon.txt
+
+      - name: Read file
+        run: cat dragon.txt
+
+      - name: List repo files
+        run: ls -lrat
