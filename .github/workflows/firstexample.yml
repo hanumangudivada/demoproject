@@ -12,6 +12,6 @@ jobs:
               run: ls
             
             - name: Read the files
-              run: cat file.txt
+              run: cat server.js
                
 
