@@ -1,0 +1,7 @@
+GitHub Actions does not allow using branches and branches-ignore together for the same event.
+
+Choose one.
+
+If you want:
+
+Trigger only on main and ignore feature branches, then just keep
