@@ -28,7 +28,7 @@ jobs:
   deploy:
 
     needs: ci
-
+    if: always()
     uses: ./.github/workflows/reusable-deploy.yml
 
     with:
