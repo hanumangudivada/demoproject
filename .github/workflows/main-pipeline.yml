@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-      - feature/*
+      - feature1/*
 
 env:
   APP_NAME: solar-system
