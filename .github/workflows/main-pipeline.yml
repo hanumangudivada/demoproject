@@ -1,0 +1,37 @@
+name: Main Pipeline
+
+on:
+
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+      - feature/*
+
+env:
+  APP_NAME: solar-system
+
+jobs:
+
+  ci:
+
+    uses: ./.github/workflows/reusable-ci.yml
+
+    with:
+      app-name: solar-system
+      node-version: "20"
+
+    secrets:
+      docker-token: ${{ secrets.DOCKER_TOKEN }}
+
+  deploy:
+
+    needs: ci
+
+    uses: ./.github/workflows/reusable-deploy.yml
+
+    with:
+      namespace: production
+
+      image-tag: ${{ needs.ci.outputs.image-tag }}

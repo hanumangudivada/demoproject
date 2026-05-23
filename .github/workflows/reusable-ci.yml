@@ -1,0 +1,73 @@
+name: Reusable CI
+
+on:
+  workflow_call:
+
+    inputs:
+      app-name:
+        required: true
+        type: string
+
+      node-version:
+        required: false
+        default: "20"
+        type: string
+
+    secrets:
+      docker-token:
+        required: true
+
+    outputs:
+      image-tag:
+        value: ${{ jobs.build.outputs.image }}
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [18,20]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Test App
+        run: |
+          echo "Testing on Node ${{ matrix.node }}"
+
+  build:
+
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      image: ${{ steps.tag.outputs.image }}
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Generate image tag
+        id: tag
+        run: |
+          echo "image=${{ inputs.app-name }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Build Docker
+        run: |
+          docker build \
+            -t ${{ inputs.app-name }}:${{ github.sha }} .
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: .
